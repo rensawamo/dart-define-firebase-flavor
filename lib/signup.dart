@@ -203,7 +203,7 @@ class _SignUpState extends State<SignUp> {
                   width: 30.0,
                 ),
                 Image.asset(
-                  "assets/images/images/apple1.png",
+                  "assets/images/apple1.png",
                   height: 50,
                   width: 50,
                   fit: BoxFit.cover,
