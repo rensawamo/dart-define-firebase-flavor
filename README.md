@@ -172,7 +172,7 @@ AppIcon-$(FLAVOR)
 ### Bundle idの切り替え
 TARGETS > Runner > Build Settingsを開き、Product Bundle Identifierを以下に書き換える
 ```sh
-$com.example.YOURAPPNAME(APP_ID_PREFIX)
+$com.example.YOURAPPNAME$(APP_ID_PREFIX)
 ```
 
 ### info　ファイルのbudle設定
