@@ -56,6 +56,7 @@ flutter build ios --dart-define-from-file=dart_defines/dev.env
         }
     ]
 }
+```
 # アイコンの生成
 ### assets/launcher_icons/にmyiconを準備
 - dev.png
@@ -186,19 +187,13 @@ YOURAPPNAME$(APP_ID_PREFIX)
 
 ![image](https://github.com/rensawamo/firebase-flavor/assets/106803080/942b52a6-f57b-41ad-8149-3a29b7392d2e)
 
+      　　
 
 すべての　環境のものを格納
+
+　　　
+
 ![image](https://github.com/rensawamo/firebase-flavor/assets/106803080/7785e6b1-e00f-4100-b064-581546a8897c)
-
-
-
-
-### Production(本番) flavorの appidを取得
-/android/app/build.gradleから appidを取得する
-```sh
-android {
-    namespace "com.example.googletry"   ←　(defalutでは com.exampleになっている)
-```
 
 
 ### 使用する  GoogleService-Infoを ルートの GoogleService-Infoにコピーする記述
@@ -212,7 +207,22 @@ cp -f ${SRCROOT}/Firebase/${FLAVOR}GoogleService-Info.plist ${SRCROOT}/GoogleSer
 
 ### GoogleService-Info.plistの参照を作成
 ルートにGoogleService-InfoをfirebaseからDWして 毎回書き換えるためのファイルを置いておく。(なんの環境でもいい)
+
+
+
 ![image](https://github.com/rensawamo/firebase-flavor/assets/106803080/4d5e5312-9466-4323-835f-7b8eec12bed2)
 
 
+
+
+# Android 
+
+
+
+### Production(本番) flavorの appidを取得
+/android/app/build.gradleから appidを取得する
+```sh
+android {
+    namespace "com.example.googletry"   ←　(defalutでは com.exampleになっている)
+```
 
