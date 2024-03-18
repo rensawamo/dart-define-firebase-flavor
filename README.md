@@ -7,6 +7,9 @@
 ```sh
 #  実行
 $  flutter run --dart-define-from-file=dart_defines/$(FLAVOR).json
+or
+$  flutter run --dart-define=FLAVOR=$(FLAVOR)
+
 # アプリビルドコマンドの例
 # --release　つけると release でビルドできる
 flutter build ios --dart-define-from-file=dart_defines/dev.env
