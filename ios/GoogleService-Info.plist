@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>847407682924-foi9poi78d8k4v65jhtf17kqu7mv684h.apps.googleusercontent.com</string>
+	<string>319490394163-ormf50schqbcf1ia57ro9shblu2hd52q.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.847407682924-foi9poi78d8k4v65jhtf17kqu7mv684h</string>
+	<string>com.googleusercontent.apps.319490394163-ormf50schqbcf1ia57ro9shblu2hd52q</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>847407682924-4jitffq9po9fofpcp24otgl5qnd82m0d.apps.googleusercontent.com</string>
+	<string>319490394163-033i88naup0ei7dggektjdlb3fl7rhlo.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBXENq7GYUG-tzUwmEz3iS2Go6krKo-mWM</string>
+	<string>AIzaSyA4h5blZsC9cs47RbbnsfQz9bSdwXk3JsE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>847407682924</string>
+	<string>319490394163</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.googletry</string>
+	<string>com.example.googletry.dev</string>
 	<key>PROJECT_ID</key>
-	<string>autheticationapp-e76ba</string>
+	<string>devdev-97c2f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>autheticationapp-e76ba.appspot.com</string>
+	<string>devdev-97c2f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:847407682924:ios:de8b4060b107b8e9240f49</string>
+	<string>1:319490394163:ios:e46f696782f42c31d2fb46</string>
 </dict>
 </plist>

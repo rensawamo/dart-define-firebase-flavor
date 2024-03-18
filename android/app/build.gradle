@@ -8,26 +8,37 @@ plugins {
 }
 
 
-// pluginの前に入れたらだめ
-def dartDefines = [:];
-if (project.hasProperty('dart-defines')) {
-    dartDefines = dartDefines + project.property('dart-defines')
-        .split(',')
-        .collectEntries { entry ->
-            def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
-            [(pair.first()): pair.last()]
-        }
-}
-task selectGoogleServicesJson(type: Copy) {
-    from "src/${dartDefines.flavor}/google-services.json"
-    into './'
+// dart-defines
+def dartEnvironmentVariables = project
+            .property('dart-defines')
+            .split(',')
+            .collectEntries {
+                new String(it.decodeBase64(), 'UTF-8')
+                    .split(',')
+                    .collectEntries {
+                        def pair = it.split('=')
+                        [(pair.first()): pair.last()]
+                    }
+            }
+
+task copyIcons(type: Copy) {
+    from "src/${dartEnvironmentVariables.FLAVOR}/res"
+    into 'src/main/res'
 }
 
-tasks.whenTaskAdded { task ->
-    if (task.name == 'processDebugGoogleServices' || task.name == 'processReleaseGoogleServices') {
-        task.dependsOn selectGoogleServicesJson
+task copyFirebaseSource(type: Copy) {
+    from "src/firebase/${dartEnvironmentVariables.FLAVOR}-google-services.json"
+    into './'
+    rename { String fileName ->
+        fileName = "google-services.json"
     }
 }
+
+tasks.whenTaskAdded {
+    it.dependsOn copyFirebaseSource
+    it.dependsOn copyIcons
+}
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -63,20 +74,31 @@ android {
     sourceSets {
        main {
            java.srcDirs += 'src/main/kotlin'
-           res.srcDirs = ['src/main/res', "src/${dartDefines.flavor}/res"]
        }
    }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "${dartDefines.appId}"
-        resValue "string", "app_name", "${dartDefines.appName}"
+        applicationId "com.example.googletry"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 21
-        targetSdkVersion flutter.targetSdkVersion
+        minSdkVersion 26
+        targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        if(dartEnvironmentVariables.FLAVOR == 'dev') {
+            applicationIdSuffix ".dev"
+            manifestPlaceholders += [appNamePrefix:".dev"]
+        } else if(dartEnvironmentVariables.FLAVOR == 'stg') {
+            applicationIdSuffix ".stg"
+            manifestPlaceholders += [appNamePrefix:".stg"]
+        } else if(dartEnvironmentVariables.FLAVOR == 'prd') {
+            applicationIdSuffix ""
+            manifestPlaceholders += [appNamePrefix:""]
+        } else {
+          print("error:Flavor not found")
+        }
     }
 
     buildTypes {
