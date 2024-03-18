@@ -221,13 +221,70 @@ cp -f ${SRCROOT}/Firebase/${FLAVOR}GoogleService-Info.plist ${SRCROOT}/GoogleSer
 
 
 # Android 
-
-
-
-### Production(本番) flavorの appidを取得
-/android/app/build.gradleから appidを取得する
+### android/app/build.gradle の設定
 ```sh
-android {
-    namespace "com.example.googletry"   ←　(defalutでは com.exampleになっている)
+# plugins {...}の下
+# 環境変数の定義
+def dartEnvironmentVariables = project
+            .property('dart-defines')
+            .split(',')
+            .collectEntries {
+                new String(it.decodeBase64(), 'UTF-8')
+                    .split(',')
+                    .collectEntries {
+                        def pair = it.split('=')
+                        [(pair.first()): pair.last()]
+                    }
+            }
+# icon imagaのコピー
+task copyIcons(type: Copy) {
+    from "src/${dartEnvironmentVariables.FLAVOR}/res"
+    into 'src/main/res'
+}
+# firebaseファイルから flavorのgoole-services.jsonを選択
+task copyFirebaseSource(type: Copy) {
+    from "src/firebase/${dartEnvironmentVariables.FLAVOR}-google-services.json"
+    into './'
+    rename { String fileName ->
+        fileName = "google-services.json"
+    }
+}
+
+tasks.whenTaskAdded {
+    it.dependsOn copyFirebaseSource
+    it.dependsOn copyIcons
+}
+
 ```
 
+
+### suffixの設定
+```sh
+defaultConfig {
+        applicationId "com.example.YOURAPPNAME"
+        minSdkVersion 26
+        targetSdkVersion 30
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+
+        if(dartEnvironmentVariables.FLAVOR == 'dev') {
+            applicationIdSuffix ".dev"
+            manifestPlaceholders += [appNamePrefix:".dev"]
+        } else if(dartEnvironmentVariables.FLAVOR == 'stg') {
+            applicationIdSuffix ".stg"
+            manifestPlaceholders += [appNamePrefix:".stg"]
+        } else if(dartEnvironmentVariables.FLAVOR == 'prd') {
+            applicationIdSuffix ""
+            manifestPlaceholders += [appNamePrefix:""]
+        } else {
+          print("error:Flavor not found")
+        }
+    }
+```
+
+### appの名前を変える
+android/app/src/main/AndroidManifest.xmlの以下に設定を変える
+```sh
+<application
+        android:label="YOURAPPNAME${appNamePrefix}"
+```
