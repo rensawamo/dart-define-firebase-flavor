@@ -16,6 +16,17 @@ flutter build ios --dart-define-from-file=dart_defines/dev.env
 
 ```
 
+### gitignoreの設定
+```sh
+ios/GoogleService-Info.plist
+ios/Firebase/devGoogleService-Info.plist
+ios/Firebase/sthGoogleService-Info.plist
+ios/Firebase/prdGoogleService-Info.plist
+android/app/src/firebase/dev-google-services.json
+android/app/src/firebase/stg-google-services.json
+android/app/src/firebase/prd-google-services.json
+```
+
 ### dart_defineの設定
 ルートディレクトリに dart_definesというフォルダを作成しflavorの設定を追加
 ```sh
@@ -215,12 +226,22 @@ cp -f ${SRCROOT}/Firebase/${FLAVOR}GoogleService-Info.plist ${SRCROOT}/GoogleSer
 
 
 
-![image](https://github.com/rensawamo/firebase-flavor/assets/106803080/4d5e5312-9466-4323-835f-7b8eec12bed2)
+![image](https://github.com/rensawamo/dart-define-firebase-flavor/assets/106803080/2958324e-652a-4efe-84a1-02bab2015382)
 
 
 
 
-# Android 
+
+# Android
+### android/app に firebaseフォルダを作成して各 flavorの google-services.jsonを 以下のように名前を変えていれる
+必要なflvorだけ用意
+
+
+![image](https://github.com/rensawamo/dart-define-firebase-flavor/assets/106803080/de030a68-c2d7-46a6-816a-965536ae9dbf)
+
+
+
+
 ### android/app/build.gradle の設定
 ```sh
 # plugins {...}の下
@@ -288,3 +309,4 @@ android/app/src/main/AndroidManifest.xmlの以下に設定を変える
 <application
         android:label="YOURAPPNAME${appNamePrefix}"
 ```
+
